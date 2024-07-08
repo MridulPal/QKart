@@ -62,7 +62,7 @@ public class Register {
         // Click the register now button
         register_now_button.click();
         // Wait for registration to complete
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
 
         this.lastGeneratedUsername = test_data_username;
