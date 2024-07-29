@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Home {
     RemoteWebDriver driver;
-    String url = "https://crio-qkart-frontend-qa.vercel.app/";
+    String url = "https://crio-qkart-frontend-qa.vercel.app";
 
     public Home(RemoteWebDriver driver) {
         this.driver = driver;
@@ -29,7 +29,6 @@ public class Home {
             WebElement logout_button = driver.findElement(By.className("MuiButton-text"));
             logout_button.click();
 
-            // SLEEP_STMT_10: Wait for Logout to complete
             // Wait for Logout to Complete
             Thread.sleep(3000);
 
@@ -51,16 +50,9 @@ public class Home {
             WebElement search = driver.findElement(By.xpath("(//input)[1]"));
             search.clear();
             search.sendKeys(product);
-            // Thread.sleep(3000);
-            WebDriverWait wait = new WebDriverWait(driver, 3);
-            wait.until(ExpectedConditions.or(ExpectedConditions.presenceOfElementLocated(By.xpath("//h4[text()=' No products found ']")),
-            ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='MuiCardContent-root css-1qw96cp']"))));
-     /* Returns Boolean if searching for the given product name occurs without any
-     * errors
-     */ 
+            Thread.sleep(3000);
             return true;
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error while searching for a product: " + e.getMessage());
             return false;
         }
@@ -77,9 +69,8 @@ public class Home {
             // search results
             searchResults = driver
                     .findElements(By.xpath("//div[@class='MuiCardContent-root css-1qw96cp']"));
-                    return searchResults;
-        }
-         catch (Exception e) {
+            return searchResults;
+        } catch (Exception e) {
             System.out.println("There were no search results: " + e.getMessage());
             return searchResults;
 
@@ -174,19 +165,15 @@ public class Home {
                 while (true) {
                     WebElement currentQuantity = products.findElement(By.xpath(".//div[@data-testid='item-qty']"));
                     int cquantity = Integer.parseInt(currentQuantity.getText());
-                    WebDriverWait wait = new WebDriverWait(driver, 5);
                     if(cquantity<quantity)
                     {
                         products.findElement(By.xpath(".//button[2]")).click();
-                       // Thread.sleep(3000);
-                        wait.until(ExpectedConditions.textToBePresentInElement(products.findElement(By.xpath(".//div[@data-testid='item-qty']")), String.valueOf(cquantity+1)));
+                        Thread.sleep(3000);
                     }
                     else if(cquantity>quantity)
                     {
                         products.findElement(By.xpath(".//button[1]")).click();
-                       // Thread.sleep(3000);
-                       wait.until(ExpectedConditions.textToBePresentInElement(products.findElement(By.xpath(".//div[@data-testid='item-qty']")), String.valueOf(cquantity-1)));
-
+                        Thread.sleep(3000);
                     }
                     else
                     {
